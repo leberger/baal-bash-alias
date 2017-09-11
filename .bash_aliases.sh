@@ -430,9 +430,6 @@ alias ll='ls -l'
 
 alias gish="git-sh"
 alias tf="echo "";echo "";tail -f -n 0 -q *"
-alias sshaws='ssh -i ~/.ssh/id_rsa cpain@52.28.59.240'
-alias sshaws-qa='ssh -i ~/.ssh/id_rsa cpain@52.29.73.74'
-alias sshaws_ttm_be_ums='ssh -i ~/.ssh/id_rsa cpain@52.28.158.58'
 alias tfh="tf | head"
 
 _man "hl" "[history] history less"
