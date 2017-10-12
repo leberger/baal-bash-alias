@@ -29,7 +29,7 @@ _AF+=('misc_developer_stuff.sh')
 
 
 ## now loop through the above array
-for i in "${_AF[@]}";do
+for alias_file in "${_AF[@]}";do
   if [ -f $FILE_DIR/$alias_file ]; then
     . $FILE_DIR/$alias_file
   fi

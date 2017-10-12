@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 alias gish="git-sh"
 
 
@@ -25,4 +24,3 @@ _man "ch" "checkouthistory" \
   "[git] Checkout history"
 alias checkouthistory='history | egrep "^[ ]*[0-9]*[ ]*checkout [ ]*([A-Za-z]|-b)" | sed "s/^[ ]*[0-9]*[ ]*checkout *//g" | grep -v `git rev-parse --abbrev-ref HEAD`'
 alias ch=checkouthistory;
-
