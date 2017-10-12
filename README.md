@@ -5,8 +5,8 @@ _**BAAL, Bash Alias, for a smooth and better daily life on your Linux**_
 
 
 @author Cedric Pain
-github.com/leberger/baal-bash-alias
-linkedin.com/in/cedricpain/
+[BAAL's Github](https://github.com/leberger/baal-bash-alias)
+[Cedric Pain's Linkedin profile](https://linkedin.com/in/cedricpain/)
  
 I have always liked writing bash scripts - that is why I have always had well-maintained bash aliases - to speed up and ease my daily routines
 
@@ -19,12 +19,12 @@ The file named "justforme.sh" is actually a set of commands and aliases just for
 
 add these lines at the end of your ~/.bashrc file :
 
-`
-    if [ -f ~/baal-bash-alias/_main.sh ]; then
-	. ~/baal-bash-alias/_main.sh
-    fi
+```
+if [ -f ~/baal-bash-alias/_main.sh ]; then
+  . ~/baal-bash-alias/_main.sh
+fi
 
-`
+```
 
 Note that if you have custom aliases, they could be rewritten if they have the same names as the ones from these ones.
 
