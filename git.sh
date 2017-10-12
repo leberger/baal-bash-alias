@@ -12,7 +12,7 @@ alias checkout='fucking gulp;git checkout'
 alias stash='fucking stash;git stash'
 _man "co" "checkout" \
   "[git] properly checking out by killing instances of gulp that could mess up everything"
-alias co='fucking gulp;git checkout'
+alias co='checkout'
 
 _man "copast" \
 	  "[git] #checkout the last branch checked-out before the current"
