@@ -2,13 +2,10 @@
 
 
 _man "reloadbashalias" "reload your aliases"
-alias reloadbashalias="source ~/$FILE_DIR/.bash_aliases.sh" 
+alias reloadbashalias="source $FILE_DIR/_main.sh" 
 
 _man "openbashrcfile" "open your bash alias file"
-alias openbashrcfile="vi ~/$FILE_DIR/bash_aliases.sh"
-
-
-
+alias openbashrcfile="vi $FILE_DIR/main.sh"
 
 
 _man "hibernate"\
@@ -41,12 +38,30 @@ alias la='ls -lth --color=auto'
 _man "lsd" "[ls] list directories"
 alias lsd='ls -d */'
 
+alias gv='grep -v' 
+alias gr='grep'
 _man "g" \
-  "grep files in current dir, and trim the result"
-
+	"[grep] grep files in current dir, and trim the result. Any arguments after the first one will exclude the directory.
+Example :
+g tail git
+will match any line of any files in the current directory (and recursiverly) BUT not in 'git' directories"
 alias g='g'
+
 function g(){
- grep -rHin -B 1 -A 1 $1 | cut -c1-130 | grep $1
+ #if [ $# -eq 1 ];then  
+ # grep -rHin -B 1 -A 1 $1 | cut -c1-130 | grep $1
+ #else
+  #echo "## grep - at least one invert-match"	 
+  cond=$1
+  condV='--exclude-dir=.git' #By Default, we exclude .git directory
+  condVarray=${@:-1}
+  for item in "${@:2}";do
+   condV="$condV --exclude-dir=$item"
+  done
+  echo $condV $cond
+  grep -rHin -B 1 -A 1 $condV $cond | cut -c1-130 | grep  --color=auto  $1
+ #fi
+
 }
 
 

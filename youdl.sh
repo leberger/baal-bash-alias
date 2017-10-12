@@ -3,9 +3,17 @@
 alias youdl='youdl'
 alias yd='youdl'
 
+
+_man "youdl" "Download a video and transform it into a music, put it in the lastest modified folder located in your Music Directory. 'youdl -h' for help"
+
 function youdl(){
   currDir=`pwd`
-  musicMainDirectory='/home/z/Music/myMisc/'
+  
+  musicMainDirectory="`realpath ~`/Music/" #this should be your base music folder, where all your music directories are
+  #because my music folder is in ~/Music/myMisc/
+  if [ 'z' = `whoami` ];then 
+    musicMainDirectory=${musicMainDirectory}'myMisc/'
+  fi
 
   currentPlaylistDirectory=$musicMainDirectory`ls -t $musicMainDirectory | head -1`
 

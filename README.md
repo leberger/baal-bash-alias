@@ -13,13 +13,14 @@ _**BAAL, Bash Alias, for a smooth and better daily life on your Linux**_
 I have always liked writing bash scripts - that is why I have always had well-maintained bash aliases - to speed up and ease my daily routines.
 I am now happy to share them with you ! Don't hesitate to get in touch
 
-There are numerous features. Some for your daily life (the one I use the most are c - a magic 'cd' function ; l ; f - a easy to use quick find alias ; youdl - download a music from a youtube link ; g - find a word into any files from current directory)
-Some others are specific for development (tf - print the line added to a log, like error logs ; gish ; copast - in git, to checkout the last branch you were into  ; ; checkout (or co) - properly checkout, killing any gulp process ; ...)
- 
+There are numerous features :
+- Some for your daily life (the one I use the most are *c* - a magic 'cd' function ; *l* ; *f* - a easy to use quick find alias ; *youdl* - download a music from a youtube link ; *g* - find a word into any files from current directory)
+- Some others are specific for development (*tf* - print the line added to a log, like error logs ; *gish* ; *copast* - in git, to checkout the last branch you were into  ; ; *checkout* (or co) - properly checkout, killing any gulp process)
+
 # CAUTIOUS :
 The file named "justforme.sh" is actually a set of commands and aliases just for me.
 
-*please delete the file named justforme.sh"*
+*please delete the file named justforme.sh*
 
 # HOW TO :
 
