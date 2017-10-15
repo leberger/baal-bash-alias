@@ -2,10 +2,10 @@
 
 
 _man "reloadbashalias" "reload your aliases"
-alias reloadbashalias="source $FILE_DIR/_main.sh" 
+alias reloadbashalias="source $BASH_ALIAS_FILE_DIR/_main.sh" 
 
 _man "openbashrcfile" "open your bash alias file"
-alias openbashrcfile="vi $FILE_DIR/main.sh"
+alias openbashrcfile="vi $BASH_ALIAS_FILE_DIR/main.sh"
 
 
 _man "hibernate"\
@@ -255,4 +255,3 @@ function psg () {
         echo "USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND"
         ps aux | grep $1
 }
-

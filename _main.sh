@@ -12,7 +12,7 @@ fortune
 export HISTCONTROL=ignoredups; HISTSIZE=4000; HISTFILESIZE=8000
 
 AAABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
-FILE_DIR=$(dirname $AAABSOLUTE_PATH)
+BASH_ALIAS_FILE_DIR=$(dirname $AAABSOLUTE_PATH)
 
 declare -a _AF #alias files
 
@@ -36,8 +36,8 @@ _AF+=('miscdeveloperstuff.sh')
 
 ## now loop through the above array
 for alias_file in "${_AF[@]}";do
-  if [ -f $FILE_DIR/$alias_file ]; then
-    . $FILE_DIR/$alias_file
+  if [ -f $BASH_ALIAS_FILE_DIR/$alias_file ]; then
+    . $BASH_ALIAS_FILE_DIR/$alias_file
   fi
 done
 

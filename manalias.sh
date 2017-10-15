@@ -24,7 +24,7 @@ _man "zz" "list many available commands with their short explanation"
 alias zz="ls  /usr/bin | xargs whatis | less"
 
 _man "alias_man" "aliasman" "man_alias" "manalias"\
-  "gives the list of alias, and their short description when available"
+  "[baal] gives the list of alias, and their short description when available"
 
 ##TODO aliasman c -> this should ONLY return the aliasman for c !!!! NOT the WHOLE list !!
 
@@ -47,3 +47,17 @@ function alias_man(){
         fi
     done
 }
+
+
+_man "falias" "findalias" \
+  "[baal] locate where the alias or function is located in its bash alias file. // If it has ANY second argument, it will open relevant file in vi at the correct line"
+alias falias='falias'
+alias findalias='falias'
+function falias () {
+  if [ $# -eq 1 ];then
+    grep -rHin "alias.*$1=" $BASH_ALIAS_FILE_DIR*
+  else
+    vi $(grep -rHin "alias $1=" $BASH_ALIAS_FILE_DIR* | sed 's/\(.*\):\(.*\):.*/+\2 \1/g')
+  fi
+}
+
