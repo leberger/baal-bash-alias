@@ -51,6 +51,7 @@ function alias_man(){
 
 _man "falias" "findalias" \
   "[baal] locate where the alias or function is located in its bash alias file. // If it has ANY second argument, it will open relevant file in vi at the correct line"
+#OMG !! THAT IS FUCKING MAGIC
 alias falias='falias'
 alias findalias='falias'
 function falias () {

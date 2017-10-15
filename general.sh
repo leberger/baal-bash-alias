@@ -255,3 +255,21 @@ function psg () {
         echo "USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND"
         ps aux | grep $1
 }
+
+_man "jump" "memorise the current folder path. You can then do anything you want. When you type again the command jump, it will go back to the other path. If you provide any kind of argument when ready to jump, it will unjump (not jump and reset the jump stuff)"
+alias jump='jump'
+function jump () {
+   if [ $# -eq 1 ];then
+     echo "[unjumpped !]";
+     unset JUMPPPPED;
+     return;
+   fi
+   if [ `echo "$JUMPPPPED" | wc -c ` -gt 1 ];then 
+     echo "[jump to $JUMPPPPED]";
+     cd $JUMPPPPED;
+     unset JUMPPPPED;
+   else
+     JUMPPPPED=`pwd`
+     echo '[ready to jump]';
+   fi
+}
