@@ -259,6 +259,7 @@ function psg () {
 _man "jump" "memorise the current folder path. You can then do anything you want. When you type again the command jump, it will go back to the other path. If you provide any kind of argument when ready to jump, it will unjump (not jump and reset the jump stuff)"
 alias jump='jump'
 function jump () {
+   #added a jump function : now, instead of typing bash to navigate in directories, do something, and come back to the initial place with ctr+d, I just have to type jump once, then do whatever I want, then type jump later on"
    if [ $# -eq 1 ];then
      echo "[unjumpped !]";
      unset JUMPPPPED;

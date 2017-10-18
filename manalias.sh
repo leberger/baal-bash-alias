@@ -50,12 +50,12 @@ function alias_man(){
 
 
 _man "falias" "findalias" \
-  "[baal] locate where the alias or function is located in its bash alias file. // If it has ANY second argument, it will open relevant file in vi at the correct line"
+  "[baal] locate and open in vi where the alias or function is located in its bash alias file. // If it has ANY second argument, it will not open the relevant file"
 #OMG !! THAT IS FUCKING MAGIC
 alias falias='falias'
 alias findalias='falias'
 function falias () {
-  if [ $# -eq 1 ];then
+  if [ $# -ne 1 ];then
     grep -rHin "alias.*$1=" $BASH_ALIAS_FILE_DIR*
   else
     vi $(grep -rHin "alias $1=" $BASH_ALIAS_FILE_DIR* | sed 's/\(.*\):\(.*\):.*/+\2 \1/g')
