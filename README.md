@@ -4,12 +4,10 @@ _**BAAL, Bash Alias, for a smooth and better daily life on your Linux**_
 
 
 
-@author Cedric Pain
+@author [Cedric Pain](https://linkedin.com/in/cedricpain/)
 
 [BAAL's Github](https://github.com/leberger/baal-bash-alias)
 
-[Cedric Pain's Linkedin profile](https://linkedin.com/in/cedricpain/)
- 
 I have always liked writing bash scripts - that is why I have always had well-maintained bash aliases - to speed up and ease my daily routines.
 I am now happy to share them with you ! Don't hesitate to get in touch
 
