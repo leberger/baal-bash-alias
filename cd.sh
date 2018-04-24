@@ -132,7 +132,7 @@ function c(){
             else
               #relative to absolute path
               case $linkk in
-                /*) absolute=$linkk;;
+                /*) absolute=$linkk;; # TODO shouldn't that be a \* ??
                 *) absolute=$PWD/$linkk;;
               esac
 
@@ -157,10 +157,10 @@ function c(){
           ;;
           h)
             echo "c [a {magic path}][r|d {magic path}][l][h] | [arg]
-Example : c D Pap # will go to ~/Document/Paperasse
-Example : c -a D la a # will ADD to your c-links the path /home/me/Documents/lava/archieve/, should this match th "D la a" magic path
-Example: c -r D la a # will REMOVE the c-link path
-Example: c -l will list the c-links
+Example : c  D Pap                #  go to ~/Document/Paperasse
+Example : c -a paparchieve D la a #  ADD to your c-links the path /home/me/Documents/lava/archieve/, should this match the "D la a" magic path
+Example : c -r paparchieve        #  REMOVE the c-link path
+Example : c -l                    #  list the c-links
 "
           return
           ;;
@@ -179,8 +179,16 @@ Example: c -l will list the c-links
       shift
     fi
 
-    ### cd to anything, if it's been aliased or not ###	  
-    cd "${aliased}$(magic_cd_helper $*)"
+    ### cd to anything, if it's been aliased or not ###	
+    if [ `echo ${aliased} | wc -c` -eq 0 ] ; then
+      cd "$(magic_cd_helper $*)"
+    else 
+	    #TODO to finish !
+      #cd "$(magic_cd_helper \"${aliased}$\" $*)"
+      #cd "${aliased}"
+      aliased=`echo ${aliased} | sed 's/\/$//g'`
+      cd "$(magic_cd_helper ${aliased} $*)"
+    fi  
 
   fi
   return;
@@ -190,7 +198,7 @@ _man "cc" "[cd] use easily c-links (type c -h for help)"
 alias cc='cc'
 #shortcut of c :{link} , to access your private links - 
 function cc(){
-  c :$1
+  c :$*
 }
 
 function _-c1(){
