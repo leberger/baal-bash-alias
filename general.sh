@@ -52,14 +52,14 @@ function g(){
  # grep -rHin -B 1 -A 1 $1 | cut -c1-130 | grep $1
  #else
   #echo "## grep - at least one invert-match"	 
-  cond=$1
+  cond="$1"
   condV='--exclude-dir=.git' #By Default, we exclude .git directory
   condVarray=${@:-1}
   for item in "${@:2}";do
    condV="$condV --exclude-dir=$item"
   done
-  echo $condV $cond
-  grep -rHin -B 1 -A 1 $condV $cond | cut -c1-130 | grep  --color=auto  $1
+  echo "$condV" "$cond"
+  grep -rHin -B 1 -A 1 "$condV" "$cond" | cut -c1-130 | grep  --color=auto  "$cond"
  #fi
 
 }
@@ -82,6 +82,7 @@ alias bwhois='whoisb'
 alias whoisb='whoisb'
 
 function whoisb(){
+  echo 'only available for .com , .co , .at , .cc , .de , .ca'
   # A POSIX variable
   OPTIND=1         # Reset in case getopts has been used previously in the shell.
 
@@ -110,7 +111,7 @@ usage
   
   echo "";
   for i in $@; do
-   if [ `whois $i | grep -c "No match for"` -eq 1 ] ; then
+   if [ `whois $i | grep -c -e "No match for " -e "No Data Found" -e "NOT FOUND" -e "Status: free" -e "Status: AVAILABLE" -e "Domain status:         available" -e "We do not have an entry in our database matching your query" -e "NOT FOUND"` -eq 1 ] ; then
      echo "";
      echo "Free - $i";
      if [ ${#output_file} -ge 1 ];then
@@ -119,7 +120,7 @@ usage
    else
      echo -n ":x - $i:";
    fi
-   sleep 0.4
+   sleep 1.5
   done;
 
   echo ''
@@ -273,4 +274,14 @@ function jump () {
      JUMPPPPED=`pwd`
      echo '[ready to jump]';
    fi
+}
+
+_man "createXdir" "createWorkingDir" "createBoiler" "Creates the basic working directory structure for a new web project"
+alias createXdir='createXdir'
+alias createWorkingDir='createXdir'
+alias createBoiler='createXdir'
+
+
+function createXdir(){
+  mkdir test w/public/{js/vendor,css/vendor,css/fonts,img} Documents Images Download config
 }
