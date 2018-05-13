@@ -7,7 +7,11 @@
 # The README file is very important to you. You want to read it. You want to read it so badly.
 
 
-fortune
+if [ -x "$(command -v fortune)" ]; then
+  fortune
+fi
+
+
 
 export HISTCONTROL=ignoredups; HISTSIZE=4000; HISTFILESIZE=8000
 
@@ -17,16 +21,17 @@ BASH_ALIAS_FILE_DIR=$(dirname $AAABSOLUTE_PATH)
 declare -a _AF #alias files
 
 #if you wish to add your own aliases, you could either add them in
-# secret.sh
+# s33_3cret.sh
 # or in justforme.sh
 # You can obviously add another .sh file ,
 # - don't forget to make them executable though (chmod +x yourScriptFile.sh)
 
+_AF+=('motivational.sh') # motivational quotes
 _AF+=('manalias.sh') # type manalias to get documentation for all the alias commands
 _AF+=('general.sh')
 _AF+=('justforme.sh') # scripts just for me. You (if you are not me) should delete the justforme.sh file - or empty it, and input all the things you want in it.
 _AF+=('cd.sh')
-_AF+=('secret.sh') # scripts that I do not need to share on git
+_AF+=('s33_3cret.sh') # scripts that I do not need to share on git
 _AF+=('youdl.sh') # my script to download easily music
 _AF+=('git.sh')
 _AF+=('vagrant.sh')
