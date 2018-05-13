@@ -37,7 +37,9 @@ function magic_cd_helper(){
     return;
   else
     if [ $(echo $arguments | grep -c '^/') -eq 0 ];then
+     if ! [[  "$arguments" =~ ^\.\..* ]];then
       startOfLine='*'
+     fi 
     fi
     if [ $(echo $arguments | grep -c '/$') -eq 0 ];then
       endOfLine='*/'
