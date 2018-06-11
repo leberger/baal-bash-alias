@@ -49,7 +49,7 @@ function magic_cd_helper(){
     #        z@b:~/Music/myMisc/20170403-Pinkaerobic73-ROCKnbaby >
     TMPFILE_list_dir=$(mktemp)
     
-    ls -d1 ${startOfLine}`echo "$arguments" | sed 's/  */*\/*/g'`${endOfLine}>$TMPFILE_list_dir
+    ls -d1 ${startOfLine}`echo "$arguments" | sed 's/  */*\/*/g' | sed 's/\/\*\.\.\*\//\/..\//g' `${endOfLine}>$TMPFILE_list_dir
     #list_dir=${list_dir// /\\ }
     
     if [ `cat $TMPFILE_list_dir | wc -l` -le 1 ];then

@@ -58,7 +58,7 @@ function falias () {
   if [ $# -ne 1 ];then
     grep -rHin "alias.*$1=" $BASH_ALIAS_FILE_DIR*
   else
-    vi $(grep -rHin "alias $1=" $BASH_ALIAS_FILE_DIR* | sed 's/\(.*\):\(.*\):.*/+\2 \1/g')
+	  vi $(grep -rHin "alias $1=" $BASH_ALIAS_FILE_DIR* | sed 's/\(.*\):\(.*\):.*/+\2 \1/g' | grep -v "Binary file")
   fi
 }
 
