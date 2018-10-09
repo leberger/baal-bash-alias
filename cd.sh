@@ -36,6 +36,7 @@ function magic_cd_helper(){
   if [ $# -eq 0 ];then
     return;
   else
+
     if [ $(echo $arguments | grep -c '^/') -eq 0 ];then
      if ! [[  "$arguments" =~ ^\.\..* ]];then
       startOfLine='*'
@@ -48,9 +49,22 @@ function magic_cd_helper(){
     #example z@b:~ > c M my RO
     #        z@b:~/Music/myMisc/20170403-Pinkaerobic73-ROCKnbaby >
     TMPFILE_list_dir=$(mktemp)
-    
+   
+   
+    # be able to find paths like .gnome/test/ , with c no tes
+    #  to do that, we enable extglob
+    # http://mywiki.wooledge.org/glob
+    # remember whether extglob was originally set, so we know whether to unset it
+    shopt -q dotglob; dotglob_set=$?
+    # set extglob if it wasn't originally set.
+    ((dotglob_set)) && shopt -s dotglob
+    # Note, 0 (true) from shopt -q is "false" in a math context.
+     
     ls -d1 ${startOfLine}`echo "$arguments" | sed 's/  */*\/*/g' | sed 's/\/\*\.\.\*\//\/..\//g' `${endOfLine}>$TMPFILE_list_dir
     #list_dir=${list_dir// /\\ }
+
+    # unset extglob if it wasn't originally set
+    ((extglob_dotglob)) && shopt -u dotglob
     
     if [ `cat $TMPFILE_list_dir | wc -l` -le 1 ];then
       cat $TMPFILE_list_dir
@@ -74,14 +88,22 @@ function magic_cd_helper(){
 
 _man "c" \
  "[cd] magic change dir. Use magic paths, set shortcuts/c links"
+
+_man ".." "..." "...." "....." ".3" ".4" ".5" ".6" ".7" \
+	 "[cd] magic change dir. '\`...\` foo' will go up three directories then cd any dir that looks like 'foo'"
+
 alias c='c'
 
 alias -- -='cd -'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias .3='cd ../../..'
-alias .4='cd ../../../..'
-alias .5='cd ../../../../..'
+alias ..='c ..'
+alias ...='c ../..'
+alias .3='c ../../..'
+alias ....='c ../../..'
+alias .4='c ../../../..'
+alias .....='c ../../../..'
+alias .5='c ../../../../..'
+alias .6='c ../../../../../..'
+alias .7='c ../../../../../../..'
 
 # _man '..c' \
 #  '[cd] c from upper directory.
