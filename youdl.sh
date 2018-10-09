@@ -2,7 +2,7 @@
 
 alias youdl='youdl'
 alias yd='youdl'
-
+alias youtube-dl='youtube-dl --no-mtime'
 
 _man "youdl" "Download a video and transform it into a music, put it in the lastest modified folder located in your Music Directory. 'youdl -h' for help"
 
