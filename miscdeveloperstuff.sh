@@ -5,8 +5,14 @@
 
 ## /!\ SEE in docker.sh for laravel, elasticsearch, gulp commands
 
-_man "getResume" "Get a *kind of* resume from a PHP file - list function names and classes"
-alias getResume='g -n -e "^var .* =\ *" -ie "function" -ie "DEPRECATED" -ie "public" -ie "private" -ie "protected" -ie "class"'
+_man "phpResume" "Get a *kind of* resume from a PHP file - list function names and classes"
+alias phpResume='\grep -n -e "^var .* =\ *" -ie "function" -ie "DEPRECATED" -ie "public" -ie "private" -ie "protected" -ie "class"'
+
+_man "pythonResume" "Get the resume of a pythoon file . Usage : pythonResume {filename}"
+
+function pythonResume () {
+ grep -e "^def " -e "'''" -e '^@' $1 | sed 's/^def //g' | sed 's/()://g' | sed "s/'''//g"
+}
 
 #todo 
 #alias tf="echo;echo;tail -f -n 0 -q"
@@ -45,16 +51,15 @@ alias replaceAll='replaceAll'
 function replaceAll(){
  echo "this do not replace recursively yet.
  TODO !! "
- return
 
  read -r -p "Are you sure you would like to : sed -i 's/$1/$2/g'? [y|n]" response
  case "$response" in
   [yY][eE][sS]|[yY]) 
     #sed -i 's/$1/$2/g'; echo "done";
     echo to test
-    return
-
-find ./ -type d \( -name .svn -o -name .git \) -prune -o \
+echo s/$1/$2/g
+#return;
+  find ./ -type d \( -name .svn -o -name .git \) -prune -o \
    -type f -exec file {} \; \
    | grep -o -P '^.+: \w+ text' \
    | sed 's/: ASCII.*//g' \
@@ -79,3 +84,9 @@ alias cjson='cjson'
 function cjson (){ 
   curl -s $1 | python -mjson.tool
 }
+
+_man "curlftpfs" "ftpmnt" "mntftp" "Mount remote ftp directory host locally into linux filesystem"
+alias ftpmnt='curlftpfs'
+alias mntftp='curlftpfs'
+
+
