@@ -141,7 +141,7 @@ _man hg "history grep"
 alias hg='history | grep --color=auto'
 
 _man "ht" "history tail"
-alias ht='history | tail -n'
+alias ht='history | tail'
 
 _man "hl" "[history] history less"
 alias hl="history | less"
@@ -285,3 +285,13 @@ alias createBoiler='createXdir'
 function createXdir(){
   mkdir test w/public/{js/vendor,css/vendor,css/fonts,img} Documents Images Download config
 }
+
+_man "findBig" "find big files ; find files over 5 Mb"
+alias findBig='find . -type f -size +50000k 2>/dev/null'
+
+
+_man "removeEmptyLines" "rws" "remove empty lines from a file"
+alias removeEmptyLines='sed -i.bak.6789 "/^\s*$/d"'
+alias rel=removeEmptyLines
+
+
