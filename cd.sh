@@ -146,7 +146,7 @@ function c(){
             fi
             shift
             #remove aready existing alias
-            [ -f $alias_file ] && sed -i.bak "/^${ln_name}/d" $alias_file
+            [ -f $alias_file ] && sed -i.bak "/^${ln_name} /d" $alias_file
             shift
             argsss=$*
             linkk=$(magic_cd_helper $argsss);
@@ -171,7 +171,7 @@ function c(){
             #remove a link from the list
             ln_name=$OPTARG
             echo `cat $alias_file | grep -n ^${ln_name}` link removed
-            sed -i.bak "/^${ln_name}/d" $alias_file
+            sed -i.bak "/^${ln_name} /d" $alias_file
             return
           ;;
           l)
