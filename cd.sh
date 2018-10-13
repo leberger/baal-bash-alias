@@ -236,3 +236,13 @@ function _-c2(){
 function _-c3(){
   cd "$(magic_cd_helper ~ $*)";
 }
+
+_complete_cc () {
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    cc_list=$(cut -f1 -d' ' $HOME'/.bash_aliases__c_alias.list')
+
+    COMPREPLY=( $(compgen -W "${cc_list}" -- $cur))
+    return 0
+}
+complete -F _complete_cc cc
