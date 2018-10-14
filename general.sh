@@ -82,7 +82,7 @@ alias bwhois='whoisb'
 alias whoisb='whoisb'
 
 function whoisb(){
-  echo 'only available for .com , .co , .at , .cc , .de , .ca'
+  echo 'only available for .com , .co , .at , .cc , .de , .ca, .io'
   # A POSIX variable
   OPTIND=1         # Reset in case getopts has been used previously in the shell.
 
@@ -129,6 +129,19 @@ usage
   date
 }
 
+_man permutation "find all possible permutation of given letters, find all orders"
+
+alias permutation='permutation'
+
+function permutation(){
+echo $(python - $*  << EOF
+import sys, itertools;
+print('\n'.join([''.join(item) for item in itertools.permutations("\n".join(sys.argv[1:]))]))
+EOF
+) | sort | uniq | tr ' ' '\n'
+}
+
+
 
 
 _man f "find with wildcards - find . -iname *${*}*"
@@ -137,8 +150,8 @@ function f(){
   find -L . -iname "*${*}*"
 }
 
-_man hg "history grep"
-alias hg='history | grep --color=auto'
+_man hg "history grep. (now you can use !2008 to repeat command #2008)"
+alias hg='echo "(now you can use !2008 to repeat command #2008)";history | grep --color=auto'
 
 _man "ht" "history tail"
 alias ht='history | tail'
@@ -159,6 +172,9 @@ alias linuxVersion="uname -a ; echo ; cat /etc/*release ; echo ; inxi -S ; cat /
 
 
 alias mkdir="mkdir -pv"
+_man "mkcd"\
+	  "create a directory ang go into it"
+mkcd() { mkdir $1;cd $1; }
 
 alias wget="wget -c"
 
@@ -236,6 +252,9 @@ alias nowdate='date +"%d-%m-%Y"'
 ## set some other defaults ##
 alias df='df -H'
 alias du='du -ch'
+
+alias du="ncdu"
+alias df="pydf"
  
 alias top='atop'
 
@@ -294,4 +313,39 @@ _man "removeEmptyLines" "rws" "remove empty lines from a file"
 alias removeEmptyLines='sed -i.bak.6789 "/^\s*$/d"'
 alias rel=removeEmptyLines
 
+_man "week" "get the week number"
+alias week='date +%V'
 
+_man "timer" "stopwatch" "stopwatc"
+alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
+alias stopwatch='timer'
+
+
+# IP addresses
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localip="ipconfig getifaddr en0"
+alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+
+
+# View HTTP traffic
+alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
+alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+
+
+#This is a function to show some system information (the KDE line will only work if KDE is installed):
+myinfo () {
+  printf "CPU: "
+  cat /proc/cpuinfo | grep "model name" | head -1 | awk '{ for (i = 4; i <= NF; i++) printf "%s ", $i }'
+  printf "\n"
+
+  cat /etc/issue | awk '{ printf "OS: %s %s %s %s | " , $1 , $2 , $3 , $4 }'
+  uname -a | awk '{ printf "Kernel: %s " , $3 }'
+  uname -m | awk '{ printf "%s | " , $1 }'
+  kded4 --version | grep "KDE Development Platform" | awk '{ printf "KDE: %s", $4 }'
+  printf "\n"
+  uptime | awk '{ printf "Uptime: %s %s %s", $3, $4, $5 }' | sed 's/,//g'
+  printf "\n"
+  cputemp | head -1 | awk '{ printf "%s %s %s\n", $1, $2, $3 }'
+  cputemp | tail -1 | awk '{ printf "%s %s %s\n", $1, $2, $3 }'
+  #cputemp | awk '{ printf "%s %s", $1 $2 }'
+}
