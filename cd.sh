@@ -30,64 +30,63 @@ unset -f magic_cd_helper
 function magic_cd_helper(){
 
   declare arguments startOfLine endOfLine list_dir TMPFILE tmp_quoted_string
-
+  
   arguments=$( echo "$*" | sed 's/%/*/g'  )
-
+          
   if [ $# -eq 0 ];then
     return;
-  else
-
-    if [ $(echo $arguments | grep -c '^/') -eq 0 ];then
-     if ! [[  "$arguments" =~ ^\.\..* ]];then
-      startOfLine='*'
-     fi 
-    fi
-    if [ $(echo $arguments | grep -c '/$') -eq 0 ];then
-      endOfLine='*/'
-    fi
-        
-    #example z@b:~ > c M my RO
-    #        z@b:~/Music/myMisc/20170403-Pinkaerobic73-ROCKnbaby >
-    TMPFILE_list_dir=$(mktemp)
-   
-   
-    # be able to find paths like .gnome/test/ , with c no tes
-    #  to do that, we enable extglob
-    # http://mywiki.wooledge.org/glob
-    # remember whether extglob was originally set, so we know whether to unset it
-    shopt -q dotglob; dotglob_set=$?
-    # set extglob if it wasn't originally set.
-    ((dotglob_set)) && shopt -s dotglob
-    # Note, 0 (true) from shopt -q is "false" in a math context.
-     
-    ls -d1 ${startOfLine}`echo "$arguments" | sed 's/  */*\/*/g' | sed 's/\/\*\.\.\*\//\/..\//g' `${endOfLine}>$TMPFILE_list_dir
-    #list_dir=${list_dir// /\\ }
-
-    # unset extglob if it wasn't originally set
-    ((extglob_dotglob)) && shopt -u dotglob
-    
-    if [ `cat $TMPFILE_list_dir | wc -l` -le 1 ];then
-      cat $TMPFILE_list_dir
-      return
-    else
-      declare tmp_quoted_string=""
-      declare tmp_array_options
-      
-      while read parcel; do
-        tmp_array_options+=("$parcel" ·)
-      done <$TMPFILE_list_dir
-      
-      TMPFILE=$(mktemp)
-      dialog --nocancel --no-lines --no-button --no-description --menu " -" 20 50 8 \
-              "${tmp_array_options[@]}" · O >&2 2>$TMPFILE
-      cat $TMPFILE
-      return
-    fi
   fi
+
+  if [ $(echo $arguments | grep -c '^/') -eq 0 ];then
+    if ! [[  "$arguments" =~ ^\.\..* ]];then
+    startOfLine='*'
+    fi 
+  fi
+  if [ $(echo $arguments | grep -c '/$') -eq 0 ];then
+    endOfLine='*/'
+  fi
+      
+  #example z@b:~ > c M my RO
+  #        z@b:~/Music/myMisc/20170403-Pinkaerobic73-ROCKnbaby >
+  TMPFILE_list_dir=$(mktemp)
+  
+  
+  # be able to find paths like .gnome/test/ , with c no tes
+  #  to do that, we enable extglob
+  # http://mywiki.wooledge.org/glob
+  # remember whether extglob was originally set, so we know whether to unset it
+  shopt -q dotglob; dotglob_set=$?
+  # set extglob if it wasn't originally set.
+  ((dotglob_set)) && shopt -s dotglob
+  # Note, 0 (true) from shopt -q is "false" in a math context.
+  ls -d1 ${startOfLine}`echo "$arguments" | \
+    sed 's/\/  */\/*/g' | sed 's/  *\//\*\//g' | \
+    sed 's/  */*\/*/g'  | sed 's/\/\*\.\.\*\//\/..\//g' `${endOfLine}>$TMPFILE_list_dir
+  #list_dir=${list_dir// /\\ }
+  
+  # unset extglob if it wasn't originally set
+  ((extglob_dotglob)) && shopt -u dotglob
+  
+  if [ `cat $TMPFILE_list_dir | wc -l` -le 1 ];then
+    cat $TMPFILE_list_dir
+    return
+  fi
+  
+  declare tmp_quoted_string=""
+  declare tmp_array_options
+  
+  while read parcel; do
+    tmp_array_options+=("$parcel" ·)
+  done <$TMPFILE_list_dir
+  
+  TMPFILE=$(mktemp)
+  dialog --nocancel --no-lines --no-button --no-description --menu " -" 20 50 8 \
+	  "${tmp_array_options[@]}" · O >&2 2>$TMPFILE
+  cat $TMPFILE
 }
 
 _man "c" \
- "[cd] magic change dir. Use magic paths, set shortcuts/c links"
+ "[cd] magic change dir. Use magic paths, set shortcuts/c links. c -h for help"
 
 _man ".." "..." "...." "....." ".3" ".4" ".5" ".6" ".7" \
 	 "[cd] magic change dir. '\`...\` foo' will go up three directories then cd any dir that looks like 'foo'"
@@ -148,29 +147,33 @@ function c(){
             #remove aready existing alias
             [ -f $alias_file ] && sed -i.bak "/^${ln_name} /d" $alias_file
             shift
-            argsss=$*
-            linkk=$(magic_cd_helper $argsss);
-            if [ -z "$linkk" ] ; then
+            if [ $# -eq 0 ] ;then
+	      linkk=`pwd`/
+	    else
+              argsss=$*
+              linkk=$(magic_cd_helper $argsss);
+	    fi
+	    if [ -z "$linkk" ] ; then
               echo "not a valid path" #> &2
 	      return
-            else
-              #relative to absolute path
-              case $linkk in
-                /*) absolute=$linkk;; # TODO shouldn't that be a \* ??
-                *) absolute=$PWD/$linkk;;
-              esac
+            
+            #relative to absolute path
+            case $linkk in
+              /*) absolute=$linkk;; # TODO shouldn't that be a \* ??
+              *) absolute=$PWD/$linkk;;
+            esac
 
-              #print the result
-              echo $absolute added as ${ln_name}
-              #add to list
-              echo $ln_name $absolute >> $alias_file
-            fi
+            #print the result
+            echo $absolute added as ${ln_name}
+            #add to list
+            echo $ln_name $absolute >> $alias_file
+            
             return
           ;;
 	  r|d)
             #remove a link from the list
             ln_name=$OPTARG
-            echo `cat $alias_file | grep -n ^${ln_name}` link removed
+            echo `cat $alias_file | grep -n ^${ln_name} ` link removed
             sed -i.bak "/^${ln_name} /d" $alias_file
             return
           ;;
@@ -182,7 +185,8 @@ function c(){
           h)
             echo "c [a {magic path}][r|d {magic path}][l][h] | [arg]
 Example : c  D Pap                #  go to ~/Document/Paperasse
-Example : c -a paparchieve D la a #  ADD to your c-links the path /home/me/Documents/lava/archieve/, should this match the "D la a" magic path
+Example : c -a paparchieve D la a #  ADD to your c-links the path /home/me/Documents/lava/archieve/, should this match the "D la a" magic path.
+          c -a foobar # add to your c-links the current path
 Example : c -r paparchieve        #  REMOVE the c-link path
 Example : c -l                    #  list the c-links
 "
@@ -203,16 +207,8 @@ Example : c -l                    #  list the c-links
       shift
     fi
 
-    ### cd to anything, if it's been aliased or not ###	
-    if [ `echo ${aliased} | wc -c` -eq 0 ] ; then
-      cd "$(magic_cd_helper $*)"
-    else 
-	    #TODO to finish !
-      #cd "$(magic_cd_helper \"${aliased}$\" $*)"
-      #cd "${aliased}"
-      aliased=`echo ${aliased} | sed 's/\/$//g'`
-      cd "$(magic_cd_helper ${aliased} $*)"
-    fi  
+    # cd to anything, if it's been aliased or not
+    cd "$(magic_cd_helper ${aliased} $*)"
 
   fi
   return;
