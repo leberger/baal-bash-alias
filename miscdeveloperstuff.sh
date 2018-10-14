@@ -90,3 +90,47 @@ alias ftpmnt='curlftpfs'
 alias mntftp='curlftpfs'
 
 
+
+
+# npm aliases
+alias ni='npm install'
+alias nig='npm install -g'
+alias nis='npm install -S'
+alias nid='npm install -D'
+alias nu='npm uninstall'
+alias nug='npm uninstall -g'
+alias nus='npm uninstall -S'
+alias nud='npm uninstall -D'
+alias nit='npm init'
+alias nity='npm init -y'
+
+#webpack
+alias wp='webpack'
+alias wpc='touch webpack.config.js'
+alias wds='webpack-dev-server'
+
+alias PANIC="espeak 'OH NO, the sky is falling'"
+
+
+
+
+_complete_hosts () {
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    host_list=`{
+        for c in /etc/ssh_config /etc/ssh/ssh_config ~/.ssh/config
+        do [ -r $c ] && sed -n -e 's/^Host[[:space:]]//p' -e 's/^[[:space:]]*HostName[[:space:]]//p' $c
+        done
+        for k in /etc/ssh_known_hosts /etc/ssh/ssh_known_hosts ~/.ssh/known_hosts
+        do [ -r $k ] && egrep -v '^[#\[]' $k|cut -f 1 -d ' '|sed -e 's/[,:].*//g'
+        done
+        sed -n -e 's/^[0-9][0-9\.]*//p' /etc/hosts; }|tr ' ' '\n'|grep -v '*'`
+    COMPREPLY=( $(compgen -W "${host_list}" -- $cur))
+    return 0
+}
+complete -F _complete_hosts ssh
+complete -F _complete_hosts sshs
+complete -F _complete_hosts host
+complete -F _complete_hosts telnet
+complete -F _complete_hosts ping
+
