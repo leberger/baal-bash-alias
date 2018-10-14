@@ -24,3 +24,25 @@ _man "ch" "checkouthistory" \
   "[git] Checkout history"
 alias checkouthistory='history | egrep "^[ ]*[0-9]*[ ]*checkout [ ]*([A-Za-z]|-b)" | sed "s/^[ ]*[0-9]*[ ]*checkout *//g" | grep -v `git rev-parse --abbrev-ref HEAD`'
 alias ch=checkouthistory;
+
+# Git Aliases
+# alias gs='git status '
+# alias ga='git add '
+# alias gb='git branch '
+# alias gam='git commit --amend '
+# alias gc='git commit'
+# alias gd='git diff'
+# alias gt='git checkout '
+# alias gk='gitk --all&'
+# alias gx='gitx --all'
+# alias pull='git pull'
+# alias pullo='git pull origin'
+# alias push='git push'
+# alias pusho='git push origin'
+# alias pushf='git push -f origin'
+# alias pushu='git push -u origin'
+# alias merge='git merge'
+# alias got='git '
+# alias get='git '
+# alias clone='git clone'
+# alias add='git add'
