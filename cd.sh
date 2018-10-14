@@ -156,7 +156,7 @@ function c(){
 	    if [ -z "$linkk" ] ; then
               echo "not a valid path" #> &2
 	      return
-            
+            fi 
             #relative to absolute path
             case $linkk in
               /*) absolute=$linkk;; # TODO shouldn't that be a \* ??
