@@ -38,3 +38,16 @@ larefreshseed='php artisan migrate:refresh --seed'
 
 _man 'curlela' 'Test elasticsearch from the workspace'
 curlela='curl -u elastic http://elasticsearch:9200'
+
+# Docker stuff
+# Clean stopped containers
+alias cco="docker ps -a | grep "Exited" | awk '{print $1}' | xargs docker rm"
+# After that, clean unused images to reclaim disk space
+alias cimg="docker images | grep none | awk '{print \$3}' | xargs docker rmi"
+# Finally the regular stuff just to save typing.
+alias dps="docker ps -a"
+alias di="docker images"
+alias drmi="docker rmi"
+alias drm="docker rm"
+
+
