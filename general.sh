@@ -138,7 +138,7 @@ echo $(python - $*  << EOF
 import sys, itertools;
 print('\n'.join([''.join(item) for item in itertools.permutations("\n".join(sys.argv[1:]))]))
 EOF
-) | sort | uniq | tr ' ' '\n'
+) | tr ' ' '\n' | sort | uniq 
 }
 
 
