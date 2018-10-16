@@ -53,13 +53,13 @@ function g(){
  #else
   #echo "## grep - at least one invert-match"	 
   cond="$1"
-  condV='--exclude-dir=.git' #By Default, we exclude .git directory
+  condV='--exclude-dir=.git --exclude-dir=\.idea --exclude-dir=generated' #By Default, we exclude .git directory
   condVarray=${@:-1}
   for item in "${@:2}";do
    condV="$condV --exclude-dir=$item"
   done
   echo "$condV" "$cond"
-  grep -rHin -B 1 -A 1 "$condV" "$cond" | cut -c1-130 | grep  --color=auto  "$cond"
+  grep -rHin -B 1 -A 1 $condV $cond | cut -c1-130 | grep  --color=auto  "$cond"
  #fi
 
 }
