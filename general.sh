@@ -59,7 +59,7 @@ function g(){
    condV="$condV --exclude-dir=$item"
   done
   echo "$condV" "$cond"
-  grep -rHin -B 1 -A 1 $condV $cond | cut -c1-130 | grep  --color=auto  "$cond"
+  grep -rHin -B 1 -A 1 $condV "$cond" | cut -c1-130 | grep  --color=auto  "$cond"
  #fi
 
 }
