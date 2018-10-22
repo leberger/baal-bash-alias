@@ -104,6 +104,18 @@ alias .5='c ../../../../..'
 alias .6='c ../../../../../..'
 alias .7='c ../../../../../../..'
 
+
+_man "cx" \
+ "[cd] c.. mydir [after] , go to the first directory that matches the string mydir, and go in its subdirectory that matches after
+ example: /home/foo/bar/stuff$ c.. hom snow # will go in /home/johnsnow, as c.. will find the closest parent directory that matches 'hom' and will go in a subdirectory matching 'snow'"
+
+alias cx='_-c5'
+function _-c5(){
+ pathh=$(echo `pwd`'/' | sed "s/\(.*$1[^\/]*\/\).*/\1/g")
+ pathh="$pathh ${@:2}"
+ c $pathh
+}
+
 # _man '..c' \
 #  '[cd] c from upper directory.
 #    Example : ~/Documents/$ ..c Ex #will go in ~/Example'
