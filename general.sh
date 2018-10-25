@@ -349,3 +349,15 @@ myinfo () {
   cputemp | tail -1 | awk '{ printf "%s %s %s\n", $1, $2, $3 }'
   #cputemp | awk '{ printf "%s %s", $1 $2 }'
 }
+
+# https://superuser.com/questions/480928/is-there-any-command-like-time-but-for-memory-usage
+# time {command} will output information about the command in the following format
+#  may be only available with zsh on your distro, sometime time might be not a shell-built-in time but a standalone command (you could try /usr/bin/time -v uname). On macOS, use /usr/bin/time -l
+
+TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
+'avg shared (code):         %X KB'$'\n'\
+'avg unshared (data/stack): %D KB'$'\n'\
+'total (sum):               %K KB'$'\n'\
+'max memory:                %M MB'$'\n'\
+'page faults from disk:     %F'$'\n'\
+'other page faults:         %R'
