@@ -20,6 +20,8 @@ alias halt='sudo /sbin/halt'
 alias shutdown='sudo /sbin/shutdown now'
 
 alias rm='rm -i'
+_man "rf" "force remove directory"
+alias rf='rm -fR'
 
 alias p='pwd'
 
