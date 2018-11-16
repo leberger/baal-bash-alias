@@ -152,6 +152,7 @@ function f(){
   find -L . -iname "*${*}*"
 }
 
+alias history='\history | sed \$d'
 _man hg "history grep. (now you can use !2008 to repeat command #2008)"
 alias hg='echo "(now you can use !2008 to repeat command #2008)";history | grep --color=auto'
 
