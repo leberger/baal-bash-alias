@@ -160,7 +160,7 @@ _man "ht" "history tail"
 alias ht='history | tail'
 
 _man "hl" "[history] history less"
-alias hl="history | less"
+alias hl="history | less +G"
 
 alias memorySpace='du ./* -sh'
 alias ziiiiaf='this is not an alias but a reminder : ifconfig, ipconfig /all for windows /// env !! screen'
