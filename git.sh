@@ -7,7 +7,6 @@ _man "gulw" \
   "start gulp and watch it"
 alias gulw='gulp && gulp watch'
 
-# put following line in  vi ~/.gitshrc
 alias checkout='fucking gulp;git checkout'
 alias stash='fucking stash;git stash'
 _man "co" "checkout" \
@@ -17,7 +16,7 @@ alias co='checkout'
 _man "copast" \
 	  "[git] #checkout the last branch checked-out before the current"
 
-alias copast='checkout $( history | egrep "^[ ]*[0-9]*[ ]*checkout [ ]*([A-Za-z]|-b)" | sed "s/^[ ]*[0-9]*[ ]*checkout *\(-b\)* *//g" | sed "s/\"//g" | grep -v `rev-parse --abbrev-ref HEAD` | tail -1) #checkout the last branch checked-out before the current'
+alias copast='echo "make sure the egrep takes into account checkout AND co ; make sure history works, even if we have some weird histvars or so for history (if it displays dates,...)"; #checkout $( history | egrep "^[ ]*[0-9]*[ ]*(checkout|co) [ ]*([A-Za-z]|-b)" | sed "s/^[ ]*[0-9]*[ ]*checkout *\(-b\)* *//g" | sed "s/\"//g" | grep -v `rev-parse --abbrev-ref HEAD` | tail -1) #checkout the last branch checked-out before the current'
 
 
 _man "ch" "checkouthistory" \
@@ -46,3 +45,8 @@ alias ch=checkouthistory;
 # alias get='git '
 # alias clone='git clone'
 # alias add='git add'
+
+_man "glistlastci" \
+  "[git] list files changed in last commit"
+alias glistlastci='git diff-tree --no-commit-id --name-only -r  $(l | head -1 | cut -f1 -d" ")'
+
