@@ -364,3 +364,13 @@ TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
 'max memory:                %M MB'$'\n'\
 'page faults from disk:     %F'$'\n'\
 'other page faults:         %R'
+
+_man "viewCSV" "viewCSV filename.csv separator ; view a csv, you can scroll up/down/left/right" 
+alias viewCSV="viewCSV"
+function viewCSV(){
+   echo "s/${2}${2}/${2} ${2}/g' | column -s${2} -t | less -#8 -N -S"
+   cat  $1 | sed -e "s/${2}${2}/${2} ${2}/g" | column -s${2} -t | less -#10 -N -S
+   # delimiter remplacement is done twice on purpose , https://stackoverflow.com/questions/1875305/command-line-csv-viewer
+   # -# : Specifies the default number of positions to scroll horizontally 
+   # -S or --chop-long-lines
+}
