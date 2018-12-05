@@ -43,10 +43,10 @@ alias lsd='ls -d */'
 alias gv='grep -v' 
 alias gr='grep'
 _man "g" \
-	"[grep] grep files in current dir, and trim the result. Any arguments after the first one will exclude the directory.
+	"[grep] grep files in current dir, and trim the result. Any arguments after the first one will: exclude the directories.
 Example :
-g tail git
-will match any line of any files in the current directory (and recursiverly) BUT not in 'git' directories"
+g tail var cache
+will match any line of any files in the current directory (and recursiverly) BUT not in 'var' directories, nor in 'cache' directory"
 alias g='g'
 
 function g(){
@@ -368,8 +368,7 @@ TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
 _man "viewCSV" "viewCSV filename.csv separator ; view a csv, you can scroll up/down/left/right" 
 alias viewCSV="viewCSV"
 function viewCSV(){
-   echo "s/${2}${2}/${2} ${2}/g' | column -s${2} -t | less -#8 -N -S"
-   cat  $1 | sed -e "s/${2}${2}/${2} ${2}/g" | column -s${2} -t | less -#10 -N -S
+   cat  $1 | sed -e "s/${2}${2}/${2} ${2}/g;s/${2}${2}/${2} ${2}/g" | column -s${2} -t | less -#10 -N -S
    # delimiter remplacement is done twice on purpose , https://stackoverflow.com/questions/1875305/command-line-csv-viewer
    # -# : Specifies the default number of positions to scroll horizontally 
    # -S or --chop-long-lines
