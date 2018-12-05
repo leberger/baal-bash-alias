@@ -46,7 +46,18 @@ alias ch=checkouthistory;
 # alias clone='git clone'
 # alias add='git add'
 
-_man "glistlastci" \
+_man "git-listlastci" \
   "[git] list files changed in last commit"
-alias glistlastci='git diff-tree --no-commit-id --name-only -r  $(l | head -1 | cut -f1 -d" ")'
+alias git-listlastci='git diff-tree --no-commit-id --name-only -r  $(l | head -1 | cut -f1 -d" ")'
 
+
+_man "git-resetlastcommitbutkeepfilechanges" \
+  "[git] reset last commit but keep file changes (You want to undo the commit but keep your changes for a bit of editing before you do a better commit.)"
+alias git-resetlastcommitbutkeepfilechanges=git-resetlastcommitbutkeepfilechanges;
+function git-resetlastcommitbutkeepfilechanges(){
+  if [ $(git log -1 | grep -c 'TMP') -ne 0 ]; then
+    git reset HEAD~1
+  else
+    echo 'last commit was not a temporary commit (does not contain "TMP" in the comment)'
+  fi
+}
