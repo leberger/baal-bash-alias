@@ -134,3 +134,15 @@ complete -F _complete_hosts host
 complete -F _complete_hosts telnet
 complete -F _complete_hosts ping
 
+_man "backup" "backup your directory into ~/x/backup . Usage: go in the parent directory from the directory you want to backup. Then type: backup {directory_name}"
+alias backup='backup'
+
+function backup(){
+  if [ ! -d "$1" ]; then
+   echo 'backup  {directoryname}'
+  fi
+  if [ ! -d "~/x/backup/" ]; then
+   mkdir -pv ~/x/backup 
+  fi
+  tar -zcf ~/x/backup/${1}_$(date +"%Y-%m-%d_%H-%M").tar.gz $1
+}
